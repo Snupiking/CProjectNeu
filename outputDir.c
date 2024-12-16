@@ -42,4 +42,3 @@ void main01() {
     const char *str = "/home/art";
     printDir(opendir(str));
 }
-
