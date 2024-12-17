@@ -79,6 +79,7 @@ void printList(Element *head)
     }
 }
 
+
 int main(void)
 {
     // test
@@ -87,7 +88,7 @@ int main(void)
     insert("y", 5, 35);
     insert("t", 2, 40);
     insert("x", 4, 20);
-
+    printList(head);
     delete ();
     delete ();
     delete ();
