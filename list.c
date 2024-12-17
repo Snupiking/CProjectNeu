@@ -9,32 +9,18 @@ typedef struct element
     char *name; // Name der Datei/ des directories
     int type;   // File oder directory eigentlich besser als boolean->int bsp. true->dir false->file
     int size;   // groeße der Datei oder directory
+    char* rights;
+    int UserID;
+    int groupID;
     struct element *next;
 
 } Element;
 
 static Element *head = NULL;
 
-void insertAtHead(char *param_name, int param_type, int param_size)
-{
 
-    Element *newElement = (Element *)malloc(sizeof(Element));
-    newElement->name = param_name;
-    newElement->type = param_type;
-    newElement->size = param_size;
 
-    if (head == NULL)
-    {
-        newElement->next = NULL;
-        head = newElement;
-        return;
-    }
-
-    newElement->next = head;
-    head = newElement;
-}
-
-void insert(char *param_name, int param_type, int param_size)
+void insert(char *param_name, int param_type, int param_size,char* param_rights,int param_UserID, int param_GroupID)
 {
 
     Element *newElement = (Element *)malloc(sizeof(Element));
@@ -58,6 +44,9 @@ void insert(char *param_name, int param_type, int param_size)
     newElement->name = param_name;
     newElement->type = param_type;
     newElement->size = param_size;
+    newElement->rights = param_rights;
+    newElement->UserID = param_UserID;
+    newElement->groupID = param_GroupID;
     newElement->next = NULL;
 }
 
@@ -78,7 +67,6 @@ void printList(Element *head)
         head = head->next;
     }
 }
-
 
 int main(void)
 {
