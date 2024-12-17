@@ -20,7 +20,7 @@ static Element *head = NULL;
 
 
 
-void insert(char *param_name, int param_type, int param_size,char* param_rights,int param_UserID, int param_GroupID)
+void insert(char *param_name, int param_type, int param_size,int param_rights,int param_UserID, int param_GroupID)
 {
 
     Element *newElement = (Element *)malloc(sizeof(Element));
@@ -59,7 +59,7 @@ char *delete(void)
     return temp_name;
 }
 
-void printList(Element *head)
+void printList()
 {
     while (head != NULL)
     {
@@ -68,14 +68,9 @@ void printList(Element *head)
     }
 }
 
-int main(void)
+int main02(void)
 {
-    // test
-    insert("hallo", 1, 50);
-    insert("welt", 0, 40);
-    insert("y", 5, 35);
-    insert("t", 2, 40);
-    insert("x", 4, 20);
+
     printList(head);
     delete ();
     delete ();
