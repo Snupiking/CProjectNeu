@@ -23,7 +23,8 @@ static Element *head = NULL;
 
 
 
-void insert(char *param_name, int param_type, int param_size,int param_rights,int param_UserID, int param_GroupID,char* param_lastUse,char* param_lastChange,char* param_lastStatusChange)
+void insert(char *param_name, int param_type, int param_size,int param_rights,int param_UserID,
+            int param_GroupID,char* param_lastUse,char* param_lastChange,char* param_lastStatusChange)
 {
 
     Element *newElement = (Element *)malloc(sizeof(Element));

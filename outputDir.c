@@ -9,7 +9,8 @@
 #ifndef INSERT_H
 #define INSERT_H
 
-void insert(char *param_name, int param_type, int param_size,int param_rights,int param_UserID, int param_GroupID);
+void insert(char *param_name, int param_type, int param_size,int param_rights,int param_UserID,
+            int param_GroupID,char* param_lastUse,char* param_lastChange,char* param_lastStatusChange);
 void printList();
 
 #endif
@@ -50,9 +51,13 @@ void printAllDir(DIR *dir) {
         if (S_ISREG(fileStat.st_mode)) param_type = 0;
         else if (S_ISDIR(fileStat.st_mode)) param_type = 1;
         else{ perror("Weder Verzeichnis noch Datei übergeben");break;}
+        char *param_lastUse = ctime(&fileStat.st_atime);
+        char *param_lastChange = ctime(&fileStat.st_mtime);
+        char *param_lastStatusChange = ctime(&fileStat.st_ctime);
 
         //param_type: 0 = Verzeichnis, nicht 0 = Datei
-        insert(entry->d_name, param_type, fileStat.st_size, fileStat.st_mode & 0777, fileStat.st_uid, fileStat.st_gid);
+        insert(entry->d_name, param_type, fileStat.st_size, fileStat.st_mode & 0777, fileStat.st_uid, fileStat.st_gid
+            , param_lastUse,param_lastChange,param_lastStatusChange);
 
         // Dateityp bestimmen
         printf("Metadaten für: %s\n", fullpath);
@@ -63,12 +68,9 @@ void printAllDir(DIR *dir) {
         //else if (S_ISBLK(fileStat.st_mode)) printf("Blockorientiertes Gerät\n");
         //else if (S_ISFIFO(fileStat.st_mode)) printf("FIFO/Named Pipe\n");
         //else if (S_ISSOCK(fileStat.st_mode)) printf("Socket\n");
-
-
-        // Zeitstempel (Änderung, Zugriff, Erstellung)
-        printf("Letzter Zugriff: %s", ctime(&fileStat.st_atime));
-        printf("Letzte Änderung: %s", ctime(&fileStat.st_mtime));
-        printf("Letzte Status-Änderung: %s", ctime(&fileStat.st_ctime));
+        //printf("Letzter Zugriff: %s", ctime(&fileStat.st_atime));
+        //printf("Letzte Änderung: %s", ctime(&fileStat.st_mtime));
+        //printf("Letzte Status-Änderung: %s", ctime(&fileStat.st_ctime));
 
 
     }
