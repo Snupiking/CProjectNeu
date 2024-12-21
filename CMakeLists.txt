@@ -3,5 +3,8 @@ project(CProjektNeu C)
 
 set(CMAKE_C_STANDARD 11)
 
+# Liste der Quellcodedateien (.c)
 add_executable(CProjektNeu main.c
-        outputDir.c)
+        Input.c
+        outputDir.c
+)
