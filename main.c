@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "input.h"
-
+void main01();
 // Output-Funktionen
 void output_help() {
     printf("Usage: ls [OPTION] [DIR]\n");
@@ -54,6 +54,6 @@ int main(int argc, char *argv[]) {
             output_listing(dir); // Standard Ausgabe
         }
     }
-
+    main01();
     return 0;
 }
