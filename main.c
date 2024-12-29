@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "input.h"
 #include "outputDir.h"
+#include "list.h"
 
 // Output-Funktionen
 void output_help() {
@@ -15,9 +16,9 @@ void output_help() {
 
 void output_listing(const char *dir) {
     printf("Listing directory: %s\n", dir);
-    printAllDir(dir);
+    insert_file_metadata(dir);
+    print_l();
 
-    printList();
 }
 
 void output_long_listing(const char *dir) {
@@ -57,6 +58,7 @@ int main(int argc, char *argv[]) {
             output_listing(dir); // Standard Ausgabe
         }
     }
+
 
     return 0;
 }

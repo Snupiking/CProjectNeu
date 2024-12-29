@@ -27,5 +27,6 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
 
 char *delete(void);
 void printList(void);
+void print_l();
 
 #endif // LIST_H
