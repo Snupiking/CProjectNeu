@@ -85,7 +85,7 @@ void insert_file_metadata(const char *dirpath) {
         *count_hardlinks = (int)(fileStat.st_nlink);
 
         insert(entry->d_name, param_type, fileStat.st_size, fileStat.st_mode & 0777, fileStat.st_uid, fileStat.st_gid
-            , param_lastUse,param_lastChange,param_lastStatusChange, count_hardlinks);
+            , param_lastUse,param_lastChange,param_lastStatusChange, *count_hardlinks);
 
     }
 }
