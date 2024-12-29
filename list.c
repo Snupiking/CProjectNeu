@@ -68,24 +68,11 @@ char *delete(void)
     return temp_name;
 }
 
-void printList()
+void printListAlphabetical()
 {
     while (head != NULL)
     {
         printf("%s\n", head->name);
         head = head->next;
     }
-}
-
-int main02(void)
-{
-
-    printList(head);
-    delete ();
-    delete ();
-    delete ();
-    delete ();
-    delete ();
-    printList(head);
-    return 0;
 }

@@ -24,7 +24,7 @@ void printAllDir(DIR *dir) {
     }
 }
 
-    void print_file_metadata(const char *dirpath) {
+    void insert_file_metadata(const char *dirpath) {
     struct dirent *entry;
     DIR *dir = opendir(dirpath);
     while ((entry = readdir(dir)) != NULL) {
@@ -63,22 +63,12 @@ void printAllDir(DIR *dir) {
         printf("Metadaten für: %s\n", fullpath);
         printf("Dateityp: ");
 
-        //else if (S_ISLNK(fileStat.st_mode)) printf("Symbolischer Link\n"); Erstmal nicht relevant für uns
-        //else if (S_ISCHR(fileStat.st_mode)) printf("Zeichenorientiertes Gerät\n");
-        //else if (S_ISBLK(fileStat.st_mode)) printf("Blockorientiertes Gerät\n");
-        //else if (S_ISFIFO(fileStat.st_mode)) printf("FIFO/Named Pipe\n");
-        //else if (S_ISSOCK(fileStat.st_mode)) printf("Socket\n");
-        //printf("Letzter Zugriff: %s", ctime(&fileStat.st_atime));
-        //printf("Letzte Änderung: %s", ctime(&fileStat.st_mtime));
-        //printf("Letzte Status-Änderung: %s", ctime(&fileStat.st_ctime));
-
-
     }
 }
 
 
 void main01() {
     const char *str = "/home/art";
-    print_file_metadata(str);
+    insert_file_metadata(str);
     printList();
 }
