@@ -33,7 +33,7 @@ void output_long_human_readable(const char *dir) {
 }
 
 void output_invalid_option() {
-    printf("Invalid option provided. Use '--help' for usage instructions.\n");
+    fprintf(stderr, "Invalid option provided. Use '--help' for usage instructions.\n");
 }
 
 int main(int argc, char *argv[]) {
