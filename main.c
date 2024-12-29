@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "input.h"
-void main01();
+#include "outputDir.h"
+
 // Output-Funktionen
 void output_help() {
     printf("Usage: ls [OPTION] [DIR]\n");
@@ -14,7 +15,9 @@ void output_help() {
 
 void output_listing(const char *dir) {
     printf("Listing directory: %s\n", dir);
-    // TODO: Hier die Logik für das Auflisten von Dateien im Verzeichnis einfügen
+    printAllDir(dir);
+
+    printList();
 }
 
 void output_long_listing(const char *dir) {
@@ -33,7 +36,7 @@ void output_long_human_readable(const char *dir) {
 }
 
 void output_invalid_option() {
-    fprintf(stderr, "Invalid option provided. Use '--help' for usage instructions.\n");
+    printf("Invalid option provided. Use '--help' for usage instructions.\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -54,6 +57,6 @@ int main(int argc, char *argv[]) {
             output_listing(dir); // Standard Ausgabe
         }
     }
-    main01();
+
     return 0;
 }
