@@ -3,29 +3,16 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include "list.h"
 
-typedef struct element
-{
-    char *name; // Name der Datei/ des directories
-    int type;   // File oder directory eigentlich besser als boolean->int bsp. true->dir false->file
-    int size;   // groeße der Datei oder directory
-    int rights;
-    int UserID;
-    int groupID;
-    char* lastUse;
-    char*lastChange;
-    char* lastStatusChange;
-    int count_hardlinks;
-    struct element *next;
-
-} Element;
 
 static Element *head = NULL;
 
 
 
-void insert(char *param_name, int param_type, int param_size,int param_rights,int param_UserID,
-            int param_GroupID,char* param_lastUse,char* param_lastChange,char* param_lastStatusChange, int count_hardlinks)
+void insert(char *param_name, int param_type, int param_size, int param_rights,
+            int param_UserID, int param_GroupID, char *param_lastUse,
+            char *param_lastChange, char *param_lastStatusChange, int count_hardlinks)
 {
 
     Element *newElement = (Element *)malloc(sizeof(Element));

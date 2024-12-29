@@ -12,7 +12,7 @@ void print_file_metadata(const char *dirpath);
 // Prototypen für Funktionen aus list.c
 void insert(char *param_name, int param_type, int param_size, int param_rights,
             int param_UserID, int param_GroupID, char *param_lastUse,
-            char *param_lastChange, char *param_lastStatusChange);
+            char *param_lastChange, char *param_lastStatusChange, int count_hardlinks);
 void printList();
 
 #endif

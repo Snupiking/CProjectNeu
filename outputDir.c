@@ -3,25 +3,21 @@
 #include <string.h>
 #include <time.h>
 #include <stddef.h>
+#include <stdlib.h>
 #include <sys/stat.h>
-#include "list.c"
+#include "list.h"
+#include "outputDir.h"
 
-#ifndef INSERT_H
-#define INSERT_H
 
-void insert(char *param_name, int param_type, int param_size,int param_rights,int param_UserID,
-            int param_GroupID,char* param_lastUse,char* param_lastChange,char* param_lastStatusChange, int count_hardlinks);
-void print_l();
-
-#endif
-
-void printAllDir(DIR *dir) {
+void printAllDir(const char *dirpath) {
     struct dirent *entry;
+    DIR *dir = opendir(dirpath);
 
 
     while ((entry = readdir(dir)) != NULL) {
         printf("%s\n", entry->d_name);
     }
+    closedir(dir);
 }
 
 void insert_file_metadata(const char *dirpath) {
@@ -94,8 +90,4 @@ void insert_file_metadata(const char *dirpath) {
     }
 }
 
-void main01() {
-    const char *str = "/home/art";
-    insert_file_metadata(str);
-    print_l();
-}
+
