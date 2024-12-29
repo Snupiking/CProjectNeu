@@ -7,4 +7,5 @@ set(CMAKE_C_STANDARD 11)
 add_executable(CProjektNeu main.c
         Input.c
         outputDir.c
+        list.c
 )
