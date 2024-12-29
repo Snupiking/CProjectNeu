@@ -10,8 +10,8 @@
 #define INSERT_H
 
 void insert(char *param_name, int param_type, int param_size,int param_rights,int param_UserID,
-            int param_GroupID,char* param_lastUse,char* param_lastChange,char* param_lastStatusChange);
-void printList();
+            int param_GroupID,char* param_lastUse,char* param_lastChange,char* param_lastStatusChange, int count_hardlinks);
+void print_l();
 
 #endif
 
@@ -24,7 +24,7 @@ void printAllDir(DIR *dir) {
     }
 }
 
-    void insert_file_metadata(const char *dirpath) {
+void insert_file_metadata(const char *dirpath) {
     struct dirent *entry;
     DIR *dir = opendir(dirpath);
     while ((entry = readdir(dir)) != NULL) {
@@ -50,25 +50,52 @@ void printAllDir(DIR *dir) {
         int param_type;
         if (S_ISREG(fileStat.st_mode)) param_type = 0;
         else if (S_ISDIR(fileStat.st_mode)) param_type = 1;
-        else{ perror("Weder Verzeichnis noch Datei übergeben");break;}
-        char *param_lastUse = ctime(&fileStat.st_atime);
-        char *param_lastChange = ctime(&fileStat.st_mtime);
-        char *param_lastStatusChange = ctime(&fileStat.st_ctime);
+        else {
+            perror("Weder Verzeichnis noch Datei übergeben");
+            break;
+        }
 
-        //param_type: 0 = Verzeichnis, nicht 0 = Datei
+        //Speicher die Zeit ab, wann es letztes mal verwendet wurde
+        char *param_lastUse = malloc(strlen(ctime(&fileStat.st_atime)) + 1);
+        if (param_lastUse == NULL) {
+            perror("Memory allocation failed for param_lastUse");
+            exit(EXIT_FAILURE);
+        }
+        strcpy(param_lastUse, ctime(&fileStat.st_atime));
+
+        // Speichert die Zeit hab wann es letztes mal verändert wurde
+        char *param_lastChange = malloc(strlen(ctime(&fileStat.st_mtime)) + 1);
+        if (param_lastChange == NULL) {
+            perror("Memory allocation failed for param_lastChange");
+            exit(EXIT_FAILURE);
+        }
+        strcpy(param_lastChange, ctime(&fileStat.st_mtime));
+        param_lastChange[strlen(param_lastChange) - 1] = '\0'; // Entfernt das \n von param_lastChange
+
+        // Speichert die veränderung des status
+        char *param_lastStatusChange = malloc(strlen(ctime(&fileStat.st_ctime)) + 1);
+        if (param_lastStatusChange == NULL) {
+            perror("Memory allocation failed for param_lastStatusChange");
+            exit(EXIT_FAILURE);
+        }
+        strcpy(param_lastStatusChange, ctime(&fileStat.st_ctime));
+
+        // Speichert die Anzahl an hardlinks
+        int *count_hardlinks = malloc(sizeof(int));
+        if (count_hardlinks == NULL) {
+            perror("Memory allocation failed for count_hardlinks");
+            exit(EXIT_FAILURE);
+        }
+        *count_hardlinks = (int)(fileStat.st_nlink);
+
         insert(entry->d_name, param_type, fileStat.st_size, fileStat.st_mode & 0777, fileStat.st_uid, fileStat.st_gid
-            , param_lastUse,param_lastChange,param_lastStatusChange);
-
-        // Dateityp bestimmen
-        printf("Metadaten für: %s\n", fullpath);
-        printf("Dateityp: ");
+            , param_lastUse,param_lastChange,param_lastStatusChange, count_hardlinks);
 
     }
 }
 
-
 void main01() {
     const char *str = "/home/art";
     insert_file_metadata(str);
-    printList();
+    print_l();
 }

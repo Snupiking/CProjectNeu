@@ -15,6 +15,7 @@ typedef struct element
     char* lastUse;
     char*lastChange;
     char* lastStatusChange;
+    int count_hardlinks;
     struct element *next;
 
 } Element;
@@ -24,7 +25,7 @@ static Element *head = NULL;
 
 
 void insert(char *param_name, int param_type, int param_size,int param_rights,int param_UserID,
-            int param_GroupID,char* param_lastUse,char* param_lastChange,char* param_lastStatusChange)
+            int param_GroupID,char* param_lastUse,char* param_lastChange,char* param_lastStatusChange, int count_hardlinks)
 {
 
     Element *newElement = (Element *)malloc(sizeof(Element));
@@ -51,10 +52,10 @@ void insert(char *param_name, int param_type, int param_size,int param_rights,in
     newElement->rights = param_rights;
     newElement->UserID = param_UserID;
     newElement->groupID = param_GroupID;
-    
     newElement->lastUse = param_lastUse;
     newElement->lastChange = param_lastChange;
     newElement->lastStatusChange = param_lastStatusChange;
+    newElement->count_hardlinks = count_hardlinks;
     
     newElement->next = NULL;
 }
@@ -74,5 +75,46 @@ void printList()
     {
         printf("%s\n", head->name);
         head = head->next;
+    }
+}
+//
+void format_rights(int rights, char *output) {
+    output[0] = (rights & 0400) ? 'r' : '-';
+    output[1] = (rights & 0200) ? 'w' : '-';
+    output[2] = (rights & 0100) ? 'x' : '-';
+    output[3] = (rights & 0040) ? 'r' : '-';
+    output[4] = (rights & 0020) ? 'w' : '-';
+    output[5] = (rights & 0010) ? 'x' : '-';
+    output[6] = (rights & 0004) ? 'r' : '-';
+    output[7] = (rights & 0002) ? 'w' : '-';
+    output[8] = (rights & 0001) ? 'x' : '-';
+    output[9] = '\0';
+}
+
+// Hauptfunktion zum Ausdrucken der Linked List im Stil von `ls -l`
+void print_l() {
+    Element *current = head;
+    char rights[10];
+
+    // Header
+    printf("Permissions Links    UID  GID  Size     Last Change              Name\n");
+    printf("----------------------------------------------------------------------------------------\n");
+
+    while (current != NULL) {
+        // Rechte in richtiges Format formatieren
+        format_rights(current->rights, rights);
+
+        // Printed jede value die benötigt wird
+        printf("%s %3d %4d %4d %8d %s %s \n",
+               rights,                   // Permissions
+               current->count_hardlinks, // Hardlink Anzahl
+               current->UserID,          // User ID
+               current->groupID,         // Group ID
+               current->size,            // Größe der Datei
+               current->lastChange,      // Zeit der letzten veränderung
+               current->name             // Name der Datei oder des Verzeichnisses
+        );
+
+        current = current->next;
     }
 }

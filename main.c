@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
         if (action & ACTION_LONG_LIST) {
             output_long_listing(dir); // Falls -l gesetzt
         }
-        if (action & ACTION_HUMAN_READABLE) {
+        if (action & ACTION_HUMAN_READABLE) { // Sollte gelöscht werden, da es nichts verändert am standardoutput
             output_human_readable(dir); // Falls -h gesetzt
         }
         if (!(action & ACTION_LONG_LIST) && !(action & ACTION_HUMAN_READABLE)) {
