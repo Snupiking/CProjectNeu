@@ -9,7 +9,7 @@ typedef struct element
     char *name; // Name der Datei/ des directories
     int type;   // File oder directory eigentlich besser als boolean->int bsp. true->dir false->file
     int size;   // groeße der Datei oder directory
-    char* rights;
+    int rights;
     int UserID;
     int groupID;
     char* lastUse;
@@ -68,7 +68,7 @@ char *delete(void)
     return temp_name;
 }
 
-void printListAlphabetical()
+void printList()
 {
     while (head != NULL)
     {

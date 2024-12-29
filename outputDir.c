@@ -24,7 +24,7 @@ void printAllDir(DIR *dir) {
     }
 }
 
-    void insert_file_metadata(const char *dirpath) {
+    void print_file_metadata(const char *dirpath) {
     struct dirent *entry;
     DIR *dir = opendir(dirpath);
     while ((entry = readdir(dir)) != NULL) {
@@ -69,6 +69,6 @@ void printAllDir(DIR *dir) {
 
 void main01() {
     const char *str = "/home/art";
-    insert_file_metadata(str);
+    print_file_metadata(str);
     printList();
 }
