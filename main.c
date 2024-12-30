@@ -17,6 +17,7 @@ void output_help() {
 void output_listing(const char *dir) {
     printf("Listing directory: %s\n", dir);
     insert_file_metadata(dir);
+    print_h();
     print_l();
 
 }

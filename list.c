@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -43,7 +45,7 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
     newElement->lastChange = param_lastChange;
     newElement->lastStatusChange = param_lastStatusChange;
     newElement->count_hardlinks = count_hardlinks;
-    
+
     newElement->next = NULL;
 }
 
@@ -79,7 +81,8 @@ void format_rights(int rights, char *output) {
 }
 
 // Hauptfunktion zum Ausdrucken der Linked List im Stil von `ls -l`
-void print_l() {
+void print_l()
+{
     Element *current = head;
     char rights[10];
 
@@ -92,12 +95,12 @@ void print_l() {
         format_rights(current->rights, rights);
 
         // Printed jede value die benötigt wird
-        printf("%s %3d %4d %4d %8d %s %s \n",
+        printf("%s %3d %4d %4d %s %s %s \n",
                rights,                   // Permissions
                current->count_hardlinks, // Hardlink Anzahl
                current->UserID,          // User ID
                current->groupID,         // Group ID
-               current->size,            // Größe der Datei
+               current->temp_sizes,      // Größe der Datei
                current->lastChange,      // Zeit der letzten veränderung
                current->name             // Name der Datei oder des Verzeichnisses
         );
@@ -105,3 +108,62 @@ void print_l() {
         current = current->next;
     }
 }
+
+// h wird bei ls ignoriert ohne l oder s
+void print_h()
+{
+    Element *current = head;
+
+    const char *sizes[] = {"B", "K", "M", "G", "T"};
+
+    // für alle elemente
+    while (current != NULL)
+    {
+        int i = 0;
+        double dbl_size = (double)current->size;
+        // für ein element
+        //i < 4 könnte bei größeren files unnötig werden idk though
+        while (dbl_size >= 1024 && i < 4)
+        {
+
+            dbl_size /= 1024;
+
+            current->size = (int)dbl_size;
+            i++;
+        }
+
+        current->size_unit = sizes[i][0];
+
+        char size_str[20]; // adjust the size as needed
+
+        size_t total_length = strlen(size_str) + 2; // +1 für Einheit, +1 für Nullterminator
+        current->temp_sizes = malloc(total_length);
+
+        if (current->temp_sizes == NULL)
+        {
+            perror("malloc");
+            exit(EXIT_FAILURE);
+        }
+
+        if (dbl_size < 10)
+        {
+            snprintf(size_str, sizeof(size_str), "%0.1f%c", dbl_size, current->size_unit);
+            
+        }
+        else
+        {
+            snprintf(size_str, sizeof(size_str), "%.0d%c", current->size, current->size_unit);
+        }
+
+        
+        strcpy(current->temp_sizes, size_str);
+
+
+       
+        
+        
+        current = current->next;
+        
+    }
+}
+
