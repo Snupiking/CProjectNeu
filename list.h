@@ -30,6 +30,7 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
 char *delete(void);
 void printList(void);
 void print_l();
-char*  calculate_h_1_element(char* name);
+void print_o();
+void print_h();
 
 #endif // LIST_H

@@ -38,6 +38,7 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
     newElement->name = param_name;
     newElement->type = param_type;
     newElement->size = param_size;
+    newElement->temp_sizes = NULL;
     newElement->rights = param_rights;
     newElement->UserID = param_UserID;
     newElement->groupID = param_GroupID;
@@ -45,6 +46,7 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
     newElement->lastChange = param_lastChange;
     newElement->lastStatusChange = param_lastStatusChange;
     newElement->count_hardlinks = count_hardlinks;
+    newElement->size_unit = -1;
 
     newElement->next = NULL;
 }
@@ -85,15 +87,20 @@ void print_l()
 {
     Element *current = head;
     char rights[10];
-
+    
     // Header
     printf("Permissions Links    UID  GID  Size     Last Change              Name\n");
     printf("----------------------------------------------------------------------------------------\n");
-
+    
     while (current != NULL) {
+        
+        if(current->temp_sizes == NULL){
+            current->temp_sizes = malloc(40);
+            sprintf(current->temp_sizes,"%d",current->size);
+        }
         // Rechte in richtiges Format formatieren
         format_rights(current->rights, rights);
-
+        
         // Printed jede value die benötigt wird
         printf("%s %3d %4d %4d %s %s %s \n",
                rights,                   // Permissions
@@ -157,13 +164,49 @@ void print_h()
 
         
         strcpy(current->temp_sizes, size_str);
-
-
-       
-        
         
         current = current->next;
         
+    }
+}
+
+void print_o()
+{
+    Element *current = head;
+    char rights[10];
+    
+    // Header
+    printf("Permissions   Links UID  Size     Last Change              Name\n");
+    printf("----------------------------------------------------------------------------------------\n");
+    int sum_size = 0; // in kilo
+    
+    while(current != NULL){
+        sum_size+=current->size;
+        current = current->next;
+    }
+    current = head;
+    sum_size = round(sum_size/1000);
+    printf("total %d\n",sum_size);
+    while (current != NULL) {
+        
+        if(current->temp_sizes == NULL){
+            current->temp_sizes = malloc(40);
+            sprintf(current->temp_sizes,"%d",current->size);
+        }
+        // Rechte in richtiges Format formatieren
+        format_rights(current->rights, rights);
+        
+        // Printed jede value die benötigt wird
+        printf("%s    %3d    %4d %s %s %s \n",
+               rights,                   // Permissions
+               current->count_hardlinks, // Hardlink Anzahl
+               current->UserID,          // User ID
+               current->temp_sizes,      // Größe der Datei
+               current->lastChange,      // Zeit der letzten veränderung
+               current->name             // Name der Datei oder des Verzeichnisses
+        );
+
+        current = current->next;
     }
 }
 
