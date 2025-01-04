@@ -210,3 +210,23 @@ void print_o()
     }
 }
 
+void print_d()
+{
+    Element *current = head;
+
+    // Header
+    printf("Directories:\n");
+    printf("----------------------------------------------------------------------------------------\n");
+
+    while (current != NULL)
+    {
+        // Prüfen, ob das aktuelle Element ein Verzeichnis ist
+        if (current->type == 1)
+        {
+            printf("%s\n", current->name); // Nur den Namen des Verzeichnisses ausgeben
+        }
+
+        current = current->next;
+    }
+}
+

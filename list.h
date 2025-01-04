@@ -32,5 +32,6 @@ void printList(void);
 void print_l();
 void print_o();
 void print_h();
+void print_d();
 
 #endif // LIST_H

@@ -22,7 +22,11 @@ ActionType process_input(int argc, char *argv[], char **dir) {
                 if (argv[i][j] == 'l') {
                     action |= ACTION_LONG_LIST;  // Kombiniere mit long format
                 } else if (argv[i][j] == 'h') {
-                    action |= ACTION_HUMAN_READABLE;  // Kombiniere mit human readable
+                    action |= ACTION_HUMAN_READABLE; // Kombiniere mit human readable
+                } else if (argv[i][j] == 'd') {
+                    action |= ACTION_DIRECTORY_ONLY;  // Kombiniere mit Verzeichnis-Option
+                } else if (argv[i][j] == 'o') {
+                    action |= ACTION_WITHOUT_GROUPINFORMATION;  // Kombiniere mit -o
                 } else {
                     printf("Invalid option: -%c\n", argv[i][j]);
                     printf("Use '--help' for usage instructions.\n");
