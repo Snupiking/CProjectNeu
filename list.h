@@ -33,5 +33,7 @@ void print_l();
 void print_o();
 void print_h();
 void print_d();
+void print_ls_without_hidden_files();
+void ls_r();
 
 #endif // LIST_H

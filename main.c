@@ -15,64 +15,24 @@ void output_help() {
 }
 
 void output_listing(const char *dir) {
-    printf("Listing directory: %s\n", dir);
-    printAllDir(dir);
+    insert_file_metadata(dir);
+    ls_r();
 
 }
 
 void output_long_listing(const char *dir) {
     printf("Listing in long format for directory: %s\n", dir);
-    insert_file_metadata(dir);
-    print_l();
-}
-
-void output_dho(const char *dir) {
-    printf("Listing in long format without group information and human-readable sizes for directory: %s\n", dir);
-    insert_file_metadata(dir);
-    print_d();
-    print_o();
-    print_h();
-}
-
-void output_ldh(const char *dir) {
-    printf("Listing in long format and human-readable sizes for directory: %s\n", dir);
-    insert_file_metadata(dir);
-    print_d();
-    print_l();
-    print_h();
+    // TODO: Hier die Logik für das lange Auflisten der Dateien einfügen
 }
 
 void output_human_readable(const char *dir) {
     printf("Listing with human-readable sizes for directory: %s\n", dir);
-    printAllDir(dir);
-    print_h();
+    // TODO: Hier die Logik für die Ausgabe mit menschenlesbaren Größen einfügen
 }
 
 void output_long_human_readable(const char *dir) {
     printf("Listing in long format with human-readable sizes for directory: %s\n", dir);
-    insert_file_metadata(dir);
-    print_l();
-    print_h();
-}
-
-void output_directory_only(const char *dir) {
-    printf("Listing directory only: %s\n", dir);
-    insert_file_metadata(dir);
-    print_d();
-
-}
-
-void output_without_groupinformation() {
-    printf("Listing in long format without group information: \n");
-    insert_file_metadata(".");
-    print_o();
-}
-
-void output_without_groupinformation_and_human_readable(const char *dir) {
-    printf("Listing in long format without group information for directory: %s\n", dir);
-    insert_file_metadata(dir);
-    print_o();
-    print_h();
+    // TODO: Hier die Logik für die kombinierte Ausgabe einfügen
 }
 
 void output_invalid_option() {
@@ -87,34 +47,13 @@ int main(int argc, char *argv[]) {
     if (action & ACTION_HELP) {
         output_help();
     } else {
-        if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION) {
-            output_dho(dir); // Falls -d, -h und -o gesetzt
-        }
-        else if (action & ACTION_LONG_LIST && action & ACTION_HUMAN_READABLE && action & ACTION_DIRECTORY_ONLY) {
-            output_ldh(dir); // Falls -l, -h und -d gesetzt
-        }
-        else if (action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_HUMAN_READABLE) {
-            output_without_groupinformation_and_human_readable(dir); // Falls -o und -h gesetzt
-        }
-        else if (action & ACTION_LONG_LIST && action & ACTION_HUMAN_READABLE) {
-            output_long_human_readable(dir); // Falls -l und -h gesetzt
-        }
-        else if (action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_HUMAN_READABLE) {
-            output_without_groupinformation(dir); // Falls -o und -h gesetzt
-        }
-        else if (action & ACTION_WITHOUT_GROUPINFORMATION) {
-            output_without_groupinformation(dir); // Falls -o gesetzt
-        }
-        else if (action & ACTION_LONG_LIST) {
+        if (action & ACTION_LONG_LIST) {
             output_long_listing(dir); // Falls -l gesetzt
         }
-        else if (action & ACTION_HUMAN_READABLE) {
+        if (action & ACTION_HUMAN_READABLE) { // Sollte gelöscht werden, da es nichts verändert am standardoutput
             output_human_readable(dir); // Falls -h gesetzt
         }
-        else if (action & ACTION_DIRECTORY_ONLY) {
-            output_directory_only(dir); // Falls -d gesetzt
-        }
-        else {
+        if (!(action & ACTION_LONG_LIST) && !(action & ACTION_HUMAN_READABLE)) {
             output_listing(dir); // Standard Ausgabe
         }
     }
