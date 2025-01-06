@@ -22,13 +22,13 @@ void output_listing(const char *dir) {
 
 void output_long_listing(const char *dir) {
     printf("Listing in long format for directory: %s\n", dir);
-    insert_file_metadata(dir);
+    insert_file_metadata(dir, 0);
     print_l();
 }
 
 void output_dho(const char *dir) {
     printf("Listing in long format without group information and human-readable sizes for directory: %s\n", dir);
-    insert_file_metadata(dir);
+    insert_file_metadata(dir, 0);
     print_d();
     print_o();
     print_h();
@@ -36,7 +36,7 @@ void output_dho(const char *dir) {
 
 void output_ldh(const char *dir) {
     printf("Listing in long format and human-readable sizes for directory: %s\n", dir);
-    insert_file_metadata(dir);
+    insert_file_metadata(dir, 0);
     print_d();
     print_l();
     print_h();
@@ -50,27 +50,27 @@ void output_human_readable(const char *dir) {
 
 void output_long_human_readable(const char *dir) {
     printf("Listing in long format with human-readable sizes for directory: %s\n", dir);
-    insert_file_metadata(dir);
+    insert_file_metadata(dir, 0);
     print_l();
     print_h();
 }
 
 void output_directory_only(const char *dir) {
     printf("Listing directory only: %s\n", dir);
-    insert_file_metadata(dir);
+    insert_file_metadata(dir, 0);
     print_d();
 
 }
 
 void output_without_groupinformation() {
     printf("Listing in long format without group information: \n");
-    insert_file_metadata(".");
+    insert_file_metadata(".", 0);
     print_o();
 }
 
 void output_without_groupinformation_and_human_readable(const char *dir) {
     printf("Listing in long format without group information for directory: %s\n", dir);
-    insert_file_metadata(dir);
+    insert_file_metadata(dir, 0);
     print_o();
     print_h();
 }
