@@ -19,13 +19,14 @@ typedef struct element {
     char *lastStatusChange;
     int count_hardlinks;// Letzter Statuswechsel
     char *temp_sizes;
+    char *param_path;
     struct element *next;    // Zeiger auf das nächste Element
 } Element;
 
 // Funktionen für die Liste
 void insert(char *param_name, int param_type, int param_size, int param_rights,
             int param_UserID, int param_GroupID, char *param_lastUse,
-            char *param_lastChange, char *param_lastStatusChange, int count_hardlinks);
+            char *param_lastChange, char *param_lastStatusChange, int count_hardlinks, char *param_path);
 
 char *delete(void);
 void printList(void);
@@ -34,6 +35,6 @@ void print_o();
 void print_h();
 void print_d();
 void print_ls_without_hidden_files();
-void ls_r();
+void ls_r(const char *current_path);
 
 #endif // LIST_H

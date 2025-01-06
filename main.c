@@ -15,8 +15,8 @@ void output_help() {
 }
 
 void output_listing(const char *dir) {
-    insert_file_metadata(dir);
-    ls_r();
+    insert_file_metadata("/home/art/snap//firefox", 1);
+    //ls_r("/home/art//snap/firefox/");
 
 }
 

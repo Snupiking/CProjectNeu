@@ -14,7 +14,7 @@ static Element *head = NULL;
 
 void insert(char *param_name, int param_type, int param_size, int param_rights,
             int param_UserID, int param_GroupID, char *param_lastUse,
-            char *param_lastChange, char *param_lastStatusChange, int count_hardlinks)
+            char *param_lastChange, char *param_lastStatusChange, int count_hardlinks, char *param_path)
 {
 
     Element *newElement = (Element *)malloc(sizeof(Element));
@@ -47,6 +47,7 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
     newElement->lastStatusChange = param_lastStatusChange;
     newElement->count_hardlinks = count_hardlinks;
     newElement->size_unit = -1;
+    newElement->param_path = param_path;
 
     newElement->next = NULL;
 }
@@ -243,8 +244,41 @@ void print_ls_without_hidden_files()
         printf("%s \n", current->name);
         current = current->next;
     }
-
 }
+
+// Annahme: Element ist deine Listenelementstruktur
+void ls_r(const char *current_path) {
+    Element *curr = head;
+
+    // 1. Ausgabe des aktuellen Verzeichnisses
+    printf("\n%s:\n", current_path);
+
+    // 2. Dateien und Verzeichnisse im aktuellen Verzeichnis ausgeben
+    while (curr != NULL) {
+        // Prüfen, ob das Element im aktuellen Verzeichnis liegt
+        if (strcmp(curr->param_path, current_path) == 0) {
+            if (curr->type == 0) { // Reguläre Datei
+                printf("%s\n", curr->name);
+            } else if (curr->type == 1) { // Verzeichnis
+                printf("%s/\n", curr->name);
+            }
+        }
+        curr = curr->next;
+    }
+
+    // 3. Rekursiv in Unterverzeichnisse gehen
+    curr = head;
+    while (curr != NULL) {
+        if (curr->type == 1 && strcmp(curr->param_path, current_path) == 0) {
+            // Rekursiver Aufruf für Unterverzeichnisse
+            char new_path[1024];
+            snprintf(new_path, sizeof(new_path), "%s/%s", current_path, curr->name);
+            ls_r(new_path);
+        }
+        curr = curr->next;
+    }
+}
+
 
 
 
