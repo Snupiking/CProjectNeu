@@ -31,9 +31,6 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
 char *delete(void);
 void printList(void);
 void print_l();
-void print_o();
-void print_h();
-void print_d();
 void print_ls_without_hidden_files();
 void ls_r(const char *current_path);
 
