@@ -8,4 +8,5 @@ add_executable(CProjektNeu main.c
         Input.c
         outputDir.c
         list.c
+        tags.c
 )

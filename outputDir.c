@@ -114,5 +114,67 @@ void insert_file_metadata(const char *dirpath, int recursive_if_1) {
     closedir(dir);
 }
 
+void print_dynamic(Element *head) {
+    int include_groupID = 0;
+    int include_UserID = 0;
+    int include_size = 0;
+    int include_rights = 0;
+    int include_links = 0;
+    int include_lastChange = 0;
+
+    char rights[10];
+
+    Element *current = head;
+
+    // Prüfe, ob die Spalten benötigt werden
+    while (current != NULL) {
+        if (current->groupID != -1) include_groupID = 1;
+        if (current->UserID != -1) include_UserID = 1;
+        if (current->size != -1) include_size = 1;
+        if (current->rights != -1) include_rights = 1;
+        if (current->count_hardlinks != -1) include_links = 1;
+        if (current->lastChange != NULL) include_lastChange = 1;
+        current = current->next;
+    }
+
+    // Header dynamisch erzeugen
+    printf("Permissions");
+    if (include_links) printf("  Links");
+    if (include_UserID) printf("  UID");
+    if (include_groupID) printf("  GID");
+    if (include_size) printf("  Size");
+    if (include_lastChange) printf("  Last Change");
+    printf("  Name\n");
+    printf("----------------------------------------------------------------------------------------\n");
+
+    // Ausgabe der Werte
+    current = head;
+    while (current != NULL) {
+
+        // Dynamische Zuweisung der Größe
+        if (current->temp_sizes == NULL) {
+            current->temp_sizes = malloc(40);  // Puffergröße sicherstellen
+            sprintf(current->temp_sizes, "%d", current->size);  // Setze die Größe als Text
+        }
+
+
+
+        // Berechtigungen formatieren
+        format_rights(current->rights, rights);
+
+        // Dynamische Ausgabe
+        printf("%s", rights);                    // Permissions
+        if (include_links) printf(" %3d", current->count_hardlinks);  // Hardlink Anzahl
+        if (include_UserID) printf(" %4d", current->UserID);           // User ID
+        if (include_groupID) printf(" %4d", current->groupID);          // Group ID
+        if (include_size) printf(" %s", current->temp_sizes);           // Größe der Datei
+        if (include_lastChange) printf(" %s", current->lastChange);             // Zeit der letzten Veränderung
+        printf(" %s\n", current->name);               // Name der Datei oder des Verzeichnisses
+
+
+        current = current->next;
+    }
+}
+
 
 

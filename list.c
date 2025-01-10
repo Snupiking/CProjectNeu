@@ -8,7 +8,7 @@
 #include "list.h"
 
 
-static Element *head = NULL;
+Element *head = NULL;
 
 
 

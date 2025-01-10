@@ -1,7 +1,7 @@
 #ifndef TAGS_H
 #define TAGS_H
 
-void print_h();
+Element *tag_h(Element *head);
 
 void print_o();
 

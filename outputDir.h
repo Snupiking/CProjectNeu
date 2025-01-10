@@ -1,6 +1,7 @@
 #ifndef OUTPUTDIR_H
 #define OUTPUTDIR_H
 
+#include "list.h"
 #include <dirent.h>  // Für DIR und struct dirent
 
 // Funktion zur Ausgabe aller Dateien in einem Verzeichnis
@@ -15,5 +16,5 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
             char *param_lastChange, char *param_lastStatusChange, int count_hardlinks, char *param_path);
 void printList();
 void insert_file_metadata(const char *dirpath, int recursive_if_1);
-
+void print_dynamic(Element *head);
 #endif
