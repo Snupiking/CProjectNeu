@@ -3,9 +3,9 @@
 
 Element *tag_h(Element *head);
 
-void print_o();
+Element *tag_o(Element *head);
 
-void print_d();
+Element *tag_d(Element *head);
 
 void ls_r();
 

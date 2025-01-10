@@ -11,9 +11,6 @@
 
 
 
-//TODO
-// h wird bei ls ignoriert ohne l oder s
-
 Element *tag_h(Element *head) {
     Element *current = head;
 
@@ -54,65 +51,39 @@ Element *tag_h(Element *head) {
     return head; // Veränderte Liste zurückgeben
 }
 
-//TODO
-void print_o()
-{
+Element *tag_o(Element *head) {
     Element *current = head;
-    char rights[10];
-    
-    // Header
-    printf("Permissions   Links UID  Size     Last Change              Name\n");
-    printf("----------------------------------------------------------------------------------------\n");
-    int sum_size = 0; // in kilo
-    
-    while(current != NULL){
-        sum_size+=current->size;
-        current = current->next;
-    }
-    current = head;
-    sum_size = round(sum_size/1000);
-    printf("total %d\n",sum_size);
-    while (current != NULL) {
-        
-        if(current->temp_sizes == NULL){
-            current->temp_sizes = malloc(40);
-            sprintf(current->temp_sizes,"%d",current->size);
-        }
-        // Rechte in richtiges Format formatieren
-        format_rights(current->rights, rights);
-        
-        // Printed jede value die benötigt wird
-        printf("%s    %3d    %4d %s %s %s \n",
-               rights,                   // Permissions
-               current->count_hardlinks, // Hardlink Anzahl
-               current->UserID,          // User ID
-               current->temp_sizes,      // Größe der Datei
-               current->lastChange,      // Zeit der letzten veränderung
-               current->name             // Name der Datei oder des Verzeichnisses
-        );
 
+    while (current != NULL) {
+        current->groupID = -1;  // Setze GroupID auf NULL, falls GroupID ein Pointer ist
         current = current->next;
     }
+
+    return head;  // Gib die modifizierte Liste zurück
 }
 
-void print_d()
-{
+
+Element *tag_d(Element *head) {
     Element *current = head;
+    Element *prev = NULL;
 
-    // Header
-    printf("Directories:\n");
-    printf("----------------------------------------------------------------------------------------\n");
-
-    while (current != NULL)
-    {
-        // Prüfen, ob das aktuelle Element ein Verzeichnis ist
-        if (current->type == 1)
-        {
-            printf("%s\n", current->name); // Nur den Namen des Verzeichnisses ausgeben
+    while (current != NULL) {
+        if (current->type != 1) { // Kein Verzeichnis
+            Element *to_delete = current;
+            if (prev == NULL) { // Kopf der Liste
+                head = current->next;
+            } else {
+                prev->next = current->next;
+            }
+            current = current->next;
+            free(to_delete); // Speicher freigeben
+        } else {
+            prev = current;
+            current = current->next;
         }
-
-        current = current->next;
     }
+
+    return head;
 }
 
 

@@ -17,4 +17,5 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
 void printList();
 void insert_file_metadata(const char *dirpath, int recursive_if_1);
 void print_dynamic(Element *head);
+void print_normal(Element *head);
 #endif

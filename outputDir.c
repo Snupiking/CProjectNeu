@@ -108,7 +108,6 @@ void insert_file_metadata(const char *dirpath, int recursive_if_1) {
             insert_file_metadata(fullpath, recursive_if_1);
         }
 
-        printf("type: %d lastUse:%s lastChange:%s lastStatus:%s hardLinks:%d \n", param_type, param_lastUse, param_lastChange, param_lastStatusChange, *count_hardlinks);
         // Speicher freigeben
         free(param_lastUse);
         free(param_lastChange);
@@ -162,8 +161,6 @@ void print_dynamic(Element *head) {
             sprintf(current->temp_sizes, "%d", current->size);  // Setze die Größe als Text
         }
 
-
-
         // Berechtigungen formatieren
         format_rights(current->rights, rights);
 
@@ -181,5 +178,19 @@ void print_dynamic(Element *head) {
     }
 }
 
+void print_normal(Element *head) {
+
+    Element *current = head;
+
+    // Ausgabe der Werte
+    current = head;
+    while (current != NULL) {
+
+        printf("%s\n", current->name);           // Name der Datei oder des Verzeichnisses
+
+
+        current = current->next;
+    }
+}
 
 
