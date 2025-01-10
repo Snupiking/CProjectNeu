@@ -16,40 +16,40 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
             int param_UserID, int param_GroupID, char *param_lastUse,
             char *param_lastChange, char *param_lastStatusChange, int count_hardlinks, char *param_path)
 {
-
+    // Neues Element anlegen
     Element *newElement = (Element *)malloc(sizeof(Element));
-    Element *curr = head;
-    // Fall 1: head
-    if (head == NULL)
-    {
-        head = newElement;
-        newElement->next = NULL;
+    if (newElement == NULL) {
+        perror("Memory allocation failed for newElement");
+        exit(EXIT_FAILURE);
     }
-    // Fall 2:tail
-    else
-    {
-        while (curr->next != NULL)
-        {
-            curr = curr->next;
-            // printf("%d ",curr->value);
-        }
-        curr->next = newElement;
-    }
-    newElement->name = param_name;
+
+    // Strings kopieren (sicherstellen, dass es nicht zu Speicherproblemen kommt)
+    newElement->name = strdup(param_name);
+    newElement->lastUse = strdup(param_lastUse);
+    newElement->lastChange = strdup(param_lastChange);
+    newElement->lastStatusChange = strdup(param_lastStatusChange);
+    newElement->param_path = strdup(param_path);
+
+    // Den Rest der Felder setzen
     newElement->type = param_type;
     newElement->size = param_size;
-    //newElement->temp_sizes = NULL;
     newElement->rights = param_rights;
     newElement->UserID = param_UserID;
     newElement->groupID = param_GroupID;
-    newElement->lastUse = param_lastUse;
-    newElement->lastChange = param_lastChange;
-    newElement->lastStatusChange = param_lastStatusChange;
     newElement->count_hardlinks = count_hardlinks;
-    //newElement->size_unit = -1;
-    newElement->param_path = param_path;
 
-    newElement->next = NULL;
+    // Liste verketten (Einfügen ans Ende)
+    Element *curr = head;
+    if (head == NULL) {
+        head = newElement;  // Wenn die Liste leer ist, wird das neue Element der Kopf
+        newElement->next = NULL;
+    } else {
+        while (curr->next != NULL) {
+            curr = curr->next;
+        }
+        curr->next = newElement;  // Neues Element ans Ende anhängen
+        newElement->next = NULL;
+    }
 }
 
 char *delete(void)

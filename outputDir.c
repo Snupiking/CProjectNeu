@@ -53,10 +53,13 @@ void insert_file_metadata(const char *dirpath, int recursive_if_1) {
         int param_type;
         if (S_ISREG(fileStat.st_mode)) param_type = 0;
         else if (S_ISDIR(fileStat.st_mode)) param_type = 1;
+
         else {
             perror("Weder Verzeichnis noch Datei übergeben");
             continue;
+
         }
+
 
         //Speicher die Zeit ab, wann es letztes mal verwendet wurde
         char *param_lastUse = malloc(strlen(ctime(&fileStat.st_atime)) + 1);
@@ -70,6 +73,7 @@ void insert_file_metadata(const char *dirpath, int recursive_if_1) {
         char *param_lastChange = malloc(strlen(ctime(&fileStat.st_mtime)) + 1);
         if (param_lastChange == NULL) {
             perror("Memory allocation failed for param_lastChange");
+
             free(param_lastUse);
             exit(EXIT_FAILURE);
         }
@@ -104,6 +108,7 @@ void insert_file_metadata(const char *dirpath, int recursive_if_1) {
             insert_file_metadata(fullpath, recursive_if_1);
         }
 
+        printf("type: %d lastUse:%s lastChange:%s lastStatus:%s hardLinks:%d \n", param_type, param_lastUse, param_lastChange, param_lastStatusChange, *count_hardlinks);
         // Speicher freigeben
         free(param_lastUse);
         free(param_lastChange);
@@ -138,13 +143,13 @@ void print_dynamic(Element *head) {
     }
 
     // Header dynamisch erzeugen
-    printf("Permissions");
-    if (include_links) printf("  Links");
-    if (include_UserID) printf("  UID");
-    if (include_groupID) printf("  GID");
-    if (include_size) printf("  Size");
-    if (include_lastChange) printf("  Last Change");
-    printf("  Name\n");
+    printf("%-15s", "Permissions");
+    if (include_links) printf("%-6s", "Links");
+    if (include_UserID) printf("%-6s", "UID");
+    if (include_groupID) printf("%-6s", "GID");
+    if (include_size) printf("%-12s", "Size");
+    if (include_lastChange) printf("%-25s", "Last Change");
+    printf("Name\n");
     printf("----------------------------------------------------------------------------------------\n");
 
     // Ausgabe der Werte
@@ -163,13 +168,13 @@ void print_dynamic(Element *head) {
         format_rights(current->rights, rights);
 
         // Dynamische Ausgabe
-        printf("%s", rights);                    // Permissions
-        if (include_links) printf(" %3d", current->count_hardlinks);  // Hardlink Anzahl
-        if (include_UserID) printf(" %4d", current->UserID);           // User ID
-        if (include_groupID) printf(" %4d", current->groupID);          // Group ID
-        if (include_size) printf(" %s", current->temp_sizes);           // Größe der Datei
-        if (include_lastChange) printf(" %s", current->lastChange);             // Zeit der letzten Veränderung
-        printf(" %s\n", current->name);               // Name der Datei oder des Verzeichnisses
+        printf("%-15s", rights);                    // Permissions
+        if (include_links) printf("%-6d", current->count_hardlinks);  // Hardlink Anzahl
+        if (include_UserID) printf("%-6d", current->UserID);           // User ID
+        if (include_groupID) printf("%-6d", current->groupID);          // Group ID
+        if (include_size) printf("%-8s", current->temp_sizes);         // Größe der Datei
+        if (include_lastChange) printf("%-28s", current->lastChange);   // Zeit der letzten Veränderung
+        printf("%-40s\n", current->name);           // Name der Datei oder des Verzeichnisses
 
 
         current = current->next;

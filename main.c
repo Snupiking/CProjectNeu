@@ -25,6 +25,7 @@ void output_long_listing(const char *dir) {
     printf("Listing in long format for directory: %s\n", dir);
     insert_file_metadata(dir, 0);
     print_dynamic(head);
+
 }
 
 void output_dho(const char *dir) {
