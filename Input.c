@@ -20,13 +20,15 @@ ActionType process_input(int argc, char *argv[], char **dir) {
         } else if (argv[i][0] == '-') {
             for (int j = 1; j < strlen(argv[i]); j++) {
                 if (argv[i][j] == 'l') {
-                    action |= ACTION_LONG_LIST;  // Kombiniere mit long format
+                    action |= ACTION_LONG_LIST;  // Kombiniere mit -l
                 } else if (argv[i][j] == 'h') {
-                    action |= ACTION_HUMAN_READABLE; // Kombiniere mit human readable
+                    action |= ACTION_HUMAN_READABLE; // Kombiniere mit -h
                 } else if (argv[i][j] == 'd') {
-                    action |= ACTION_DIRECTORY_ONLY;  // Kombiniere mit Verzeichnis-Option
-                } else if (argv[i][j] == 'o') {
-                    action |= ACTION_WITHOUT_GROUPINFORMATION;  // Kombiniere mit -o
+                    action |= ACTION_DIRECTORY_ONLY;  // Kombiniere mit -d
+                } else if (argv[i][j] == 'o') {       // Kombiniere mit -o
+                    action |= ACTION_WITHOUT_GROUPINFORMATION;
+                } else if (argv[i][j] == 'f') {
+                    action |= ACTION_OUTPUT_FILE;      // Kombiniere mit -f
                 } else {
                     printf("Invalid option: -%c\n", argv[i][j]);
                     printf("Use '--help' for usage instructions.\n");

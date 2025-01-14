@@ -10,7 +10,8 @@ typedef enum {
     ACTION_HUMAN_READABLE = 4, // 0b0100 - "ls -h"
     ACTION_HELP = 8,            // 0b1000 - "--help"
     ACTION_DIRECTORY_ONLY = 16, // 0b10000 - "ls -d"
-    ACTION_WITHOUT_GROUPINFORMATION = 32          // 0b11111 - Alle Optionen
+    ACTION_WITHOUT_GROUPINFORMATION = 32,          // 0b11111 - "ls -o"
+    ACTION_OUTPUT_FILE = 64    // 0b100000 - "ls -f"
 } ActionType;
 
 // Funktionsprototypen

@@ -13,7 +13,8 @@ void output_help() {
     printf("  -l    use a long listing format\n");
     printf("  -h    with -l, print sizes like 1K 234M 2G etc.\n");
     printf("  -o    like -l, but do not list group information\n");
-    printf("  -d    list directories themselves, not their contents");
+    printf("  -d    list directories themselves, not their contents\n");
+    printf("  -f    generates an ls.txt   (!!not like original ls -f!!)\n");
     printf("  --help   display this help and exit\n");
 }
 
@@ -127,10 +128,17 @@ void output_h (const char *dir) {
 
 // ls -o
 void output_o (const char *dir) {
-    printf("Listing in long format without group information: \n");
+    printf("Listing in long format without group information: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_o(head);
-    print_dynamic(head);
+    print_dynamic_to_file(head);
+}
+
+// ls -f
+void output_f (const char *dir) {
+    printf("Listing directory and create .txt file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    print_normal_to_file(head);
 }
 
 // ls
@@ -190,6 +198,9 @@ int main(int argc, char *argv[]) {
         }
         else if (action & ACTION_DIRECTORY_ONLY) {
             output_d(dir); // Falls -d gesetzt
+        }
+        else if (action & ACTION_OUTPUT_FILE) {
+            output_f(dir); // Falls -f gesetzt
         }
         else {
             output_normal(dir); // Standard Ausgabe

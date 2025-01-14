@@ -84,38 +84,6 @@ void format_rights(int rights, char *output) {
 }
 
 // Hauptfunktion zum Ausdrucken der Linked List im Stil von `ls -l`
-void print_l()
-{
-    Element *current = head;
-    char rights[10];
-    
-    // Header
-    printf("Permissions Links    UID  GID  Size     Last Change              Name\n");
-    printf("----------------------------------------------------------------------------------------\n");
-    
-    while (current != NULL) {
-        
-        if(current->temp_sizes == NULL){
-            current->temp_sizes = malloc(40);
-            sprintf(current->temp_sizes,"%d",current->size);
-        }
-        // Rechte in richtiges Format formatieren
-        format_rights(current->rights, rights);
-        
-        // Printed jede value die benötigt wird
-        printf("%s %3d %4d %4d %s %s %s \n",
-               rights,                   // Permissions
-               current->count_hardlinks, // Hardlink Anzahl
-               current->UserID,          // User ID
-               current->groupID,         // Group ID
-               current->temp_sizes,      // Größe der Datei
-               current->lastChange,      // Zeit der letzten veränderung
-               current->name             // Name der Datei oder des Verzeichnisses
-        );
-
-        current = current->next;
-    }
-}
 
 void print_ls_without_hidden_files()
 {

@@ -18,4 +18,6 @@ void printList();
 void insert_file_metadata(const char *dirpath, int recursive_if_1);
 void print_dynamic(Element *head);
 void print_normal(Element *head);
+void print_dynamic_to_file(Element *head);
+void print_normal_to_file(Element *head);
 #endif

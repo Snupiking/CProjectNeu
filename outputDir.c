@@ -193,4 +193,94 @@ void print_normal(Element *head) {
     }
 }
 
+void print_dynamic_to_file(Element *head) {
+    FILE *file = fopen("ls.txt", "w");  // Datei ls.txt öffnen oder erstellen
+    if (file == NULL) {
+        perror("Error opening file");
+        exit(EXIT_FAILURE);  // Falls die Datei nicht geöffnet werden kann, Fehler ausgeben
+    }
+
+    int include_groupID = 0;
+    int include_UserID = 0;
+    int include_size = 0;
+    int include_rights = 0;
+    int include_links = 0;
+    int include_lastChange = 0;
+
+    char rights[10];
+
+    Element *current = head;
+
+    // Prüfe, ob die Spalten benötigt werden
+    while (current != NULL) {
+        if (current->groupID != -1) include_groupID = 1;
+        if (current->UserID != -1) include_UserID = 1;
+        if (current->size != -1) include_size = 1;
+        if (current->rights != -1) include_rights = 1;
+        if (current->count_hardlinks != -1) include_links = 1;
+        if (current->lastChange != NULL) include_lastChange = 1;
+        current = current->next;
+    }
+
+    // Header dynamisch erzeugen und in Datei schreiben
+    fprintf(file, "%-15s", "Permissions");
+    if (include_links) fprintf(file, "%-6s", "Links");
+    if (include_UserID) fprintf(file, "%-6s", "UID");
+    if (include_groupID) fprintf(file, "%-6s", "GID");
+    if (include_size) fprintf(file, "%-12s", "Size");
+    if (include_lastChange) fprintf(file, "%-25s", "Last Change");
+    fprintf(file, "Name\n");
+    fprintf(file, "----------------------------------------------------------------------------------------\n");
+
+    // Ausgabe der Werte in die Datei
+    current = head;
+    while (current != NULL) {
+
+        // Dynamische Zuweisung der Größe
+        if (current->temp_sizes == NULL) {
+            current->temp_sizes = malloc(40);  // Puffergröße sicherstellen
+            sprintf(current->temp_sizes, "%d", current->size);  // Setze die Größe als Text
+        }
+
+        // Berechtigungen formatieren
+        format_rights(current->rights, rights);
+
+        // Dynamische Ausgabe in die Datei
+        fprintf(file, "%-15s", rights);                    // Permissions
+        if (include_links) fprintf(file, "%-6d", current->count_hardlinks);  // Hardlink Anzahl
+        if (include_UserID) fprintf(file, "%-6d", current->UserID);           // User ID
+        if (include_groupID) fprintf(file, "%-6d", current->groupID);          // Group ID
+        if (include_size) fprintf(file, "%-8s", current->temp_sizes);         // Größe der Datei
+        if (include_lastChange) fprintf(file, "%-28s", current->lastChange);   // Zeit der letzten Veränderung
+        fprintf(file, "%-40s\n", current->name);           // Name der Datei oder des Verzeichnisses
+
+        current = current->next;
+    }
+
+    fclose(file);  // Datei schließen
+}
+
+void print_normal_to_file(Element *head) {
+
+
+    FILE *file = fopen("ls.txt", "w");  // Datei ls.txt öffnen oder erstellen
+    if (file == NULL) {
+        perror("Error opening file");
+        exit(EXIT_FAILURE);  // Falls die Datei nicht geöffnet werden kann, Fehler ausgeben
+    }
+
+    Element *current = head;
+
+    // Ausgabe der Werte
+    current = head;
+    while (current != NULL) {
+
+        fprintf(file, "%s\n", current->name);           // Name der Datei oder des Verzeichnisses
+
+
+        current = current->next;
+    }
+    fclose(file);  // Datei schließen
+}
+
 
