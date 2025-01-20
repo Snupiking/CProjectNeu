@@ -20,4 +20,5 @@ void print_dynamic(Element *head);
 void print_normal(Element *head);
 void print_dynamic_to_file(Element *head);
 void print_normal_to_file(Element *head);
+void print_ls_without_hidden_files(Element *head);
 #endif

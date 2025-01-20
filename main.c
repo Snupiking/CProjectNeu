@@ -144,7 +144,8 @@ void output_f (const char *dir) {
 // ls
 void output_normal (const char *dir) {
     printf("Listing directory: %s\n", dir);
-    printAllDir(dir);
+    insert_file_metadata(dir, 0);
+    print_ls_without_hidden_files(head);
 }
 
 // wrong input
@@ -203,7 +204,7 @@ int main(int argc, char *argv[]) {
             output_f(dir); // Falls -f gesetzt
         }
         else {
-            output_normal(dir); // Standard Ausgabe
+            output_normal(dir);// Standard Ausgabe
         }
     }
 

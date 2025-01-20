@@ -283,4 +283,19 @@ void print_normal_to_file(Element *head) {
     fclose(file);  // Datei schließen
 }
 
+void print_ls_without_hidden_files(Element *head)
+{
+    Element *current = head;
+    while (current != NULL) {
+        //Filtert alle Dateien, die mit "." anfangen oder nicht existieren
+        if (current->name != NULL && current->name[0] == '.') {
+            current = current->next;
+            continue;
+        }
+
+        printf("%s \n", current->name);
+        current = current->next;
+    }
+}
+
 

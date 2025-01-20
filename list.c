@@ -83,22 +83,7 @@ void format_rights(int rights, char *output) {
     output[9] = '\0';
 }
 
-// Hauptfunktion zum Ausdrucken der Linked List im Stil von `ls -l`
 
-void print_ls_without_hidden_files()
-{
-    Element *current = head;
-    while (current != NULL) {
-        //Filtert alle Dateien, die mit "." anfangen oder nicht existieren
-        if (current->name != NULL && current->name[0] == '.') {
-            current = current->next;
-            continue;
-        }
-
-        printf("%s \n", current->name);
-        current = current->next;
-    }
-}
 
 
 
