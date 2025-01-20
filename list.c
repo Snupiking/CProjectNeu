@@ -14,7 +14,7 @@ Element *head = NULL;
 
 void insert(char *param_name, int param_type, int param_size, int param_rights,
             int param_UserID, int param_GroupID, char *param_lastUse,
-            char *param_lastChange, char *param_lastStatusChange, int count_hardlinks, char *param_path)
+            char *param_lastChange, char *param_lastStatusChange, int count_hardlinks, char *param_path, char *temp_sizes)
 {
     // Neues Element anlegen
     Element *newElement = (Element *)malloc(sizeof(Element));
@@ -33,6 +33,7 @@ void insert(char *param_name, int param_type, int param_size, int param_rights,
     // Den Rest der Felder setzen
     newElement->type = param_type;
     newElement->size = param_size;
+    newElement->temp_sizes = NULL;
     newElement->rights = param_rights;
     newElement->UserID = param_UserID;
     newElement->groupID = param_GroupID;

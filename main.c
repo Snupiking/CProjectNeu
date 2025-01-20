@@ -131,7 +131,7 @@ void output_o (const char *dir) {
     printf("Listing in long format without group information: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_o(head);
-    print_dynamic_to_file(head);
+    print_dynamic(head);
 }
 
 // ls -f
@@ -144,6 +144,7 @@ void output_f (const char *dir) {
 // ls
 void output_normal (const char *dir) {
     printf("Listing directory: %s\n", dir);
+    printf("PIkachu");
     insert_file_metadata(dir, 0);
     print_ls_without_hidden_files(head);
 }

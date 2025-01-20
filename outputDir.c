@@ -100,8 +100,10 @@ void insert_file_metadata(const char *dirpath, int recursive_if_1) {
             exit(EXIT_FAILURE);
         }
         *count_hardlinks = (int)(fileStat.st_nlink);
+        printf("File size: %ld bytes\n", fileStat.st_size);
+
         insert(entry->d_name, param_type, fileStat.st_size, fileStat.st_mode & 0777, fileStat.st_uid, fileStat.st_gid
-            , param_lastUse, param_lastChange, param_lastStatusChange, *count_hardlinks, partial_path);
+            , param_lastUse, param_lastChange, param_lastStatusChange, *count_hardlinks, partial_path, NULL);
 
         // Rekursiver Aufruf für Verzeichnisse
         if (param_type == 1 && recursive_if_1 == 1) {
@@ -129,7 +131,6 @@ void print_dynamic(Element *head) {
     char rights[10];
 
     Element *current = head;
-
     // Prüfe, ob die Spalten benötigt werden
     while (current != NULL) {
         if (current->groupID != -1) include_groupID = 1;
@@ -175,7 +176,6 @@ void print_dynamic(Element *head) {
         if (include_size) printf("%-8s", current->temp_sizes);         // Größe der Datei
         if (include_lastChange) printf("%-28s", current->lastChange);   // Zeit der letzten Veränderung
         printf("%-40s\n", current->name);           // Name der Datei oder des Verzeichnisses
-
         current = current->next;
     }
 }
