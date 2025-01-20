@@ -154,10 +154,13 @@ void print_dynamic(Element *head) {
     // Ausgabe der Werte
     current = head;
     while (current != NULL) {
-
         // Dynamische Zuweisung der Größe
         if (current->temp_sizes == NULL) {
             current->temp_sizes = malloc(40);  // Puffergröße sicherstellen
+            if (current->temp_sizes == NULL) {
+                perror("Memory allocation failed for temp_sizes");
+                exit(EXIT_FAILURE);
+            }
             sprintf(current->temp_sizes, "%d", current->size);  // Setze die Größe als Text
         }
 
@@ -172,7 +175,6 @@ void print_dynamic(Element *head) {
         if (include_size) printf("%-8s", current->temp_sizes);         // Größe der Datei
         if (include_lastChange) printf("%-28s", current->lastChange);   // Zeit der letzten Veränderung
         printf("%-40s\n", current->name);           // Name der Datei oder des Verzeichnisses
-
 
         current = current->next;
     }
