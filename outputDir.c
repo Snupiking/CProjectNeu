@@ -100,7 +100,6 @@ void insert_file_metadata(const char *dirpath, int recursive_if_1) {
             exit(EXIT_FAILURE);
         }
         *count_hardlinks = (int)(fileStat.st_nlink);
-        printf("File size: %ld bytes\n", fileStat.st_size);
 
         insert(entry->d_name, param_type, fileStat.st_size, fileStat.st_mode & 0777, fileStat.st_uid, fileStat.st_gid
             , param_lastUse, param_lastChange, param_lastStatusChange, *count_hardlinks, partial_path, NULL);

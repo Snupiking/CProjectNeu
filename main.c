@@ -149,6 +149,128 @@ void output_normal (const char *dir) {
     print_ls_without_hidden_files(head);
 }
 
+
+// ls -lhof
+void output_lhof(const char *dir) {
+    printf("Listing in long format, human-readable, without group information and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_h(head);
+    head = tag_o(head);
+    print_dynamic_to_file(head);
+}
+
+// ls -ldhf
+void output_ldhf(const char *dir) {
+    printf("Listing in long format, directory only, human-readable and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_h(head);
+    head = tag_d(head);
+    print_dynamic_to_file(head);
+}
+
+// ls -ldof
+void output_ldof(const char *dir) {
+    printf("Listing in long format, directory only, without group information and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_d(head);
+    head = tag_o(head);
+    print_dynamic_to_file(head);
+}
+
+// ls -dhof
+void output_dhof(const char *dir) {
+    printf("Listing directory only, human-readable, without group information and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_d(head);
+    head = tag_h(head);
+    head = tag_o(head);
+    print_normal_to_file(head);
+}
+
+// ls -lho
+void output_lho(const char *dir) {
+    printf("Listing in long format, human-readable and without group information: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_h(head);
+    head = tag_o(head);
+    print_dynamic(head);
+}
+
+// ls -ldf
+void output_ldf(const char *dir) {
+    printf("Listing in long format, directory only and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_d(head);
+    print_dynamic_to_file(head);
+}
+
+// ls -lof
+void output_lof(const char *dir) {
+    printf("Listing in long format, without group information and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_o(head);
+    print_dynamic_to_file(head);
+}
+
+// ls -dhf
+void output_dhf(const char *dir) {
+    printf("Listing directory only, human-readable and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_d(head);
+    head = tag_h(head);
+    print_normal_to_file(head);
+}
+
+// ls -dof
+void output_dof(const char *dir) {
+    printf("Listing directory only, without group information and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_d(head);
+    head = tag_o(head);
+    print_normal_to_file(head);
+}
+
+// ls -hof
+void output_hof(const char *dir) {
+    printf("Listing human-readable, without group information and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_h(head);
+    head = tag_o(head);
+    print_normal_to_file(head);
+}
+
+// ls -hf
+void output_hf(const char *dir) {
+    printf("Listing human-readable and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_h(head);
+    print_normal_to_file(head);
+}
+
+// ls -of
+void output_of(const char *dir) {
+    printf("Listing without group information and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_o(head);
+    print_normal_to_file(head);
+}
+
+// ls -df
+void output_df(const char *dir) {
+    printf("Listing directory only and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_d(head);
+    print_normal_to_file(head);
+}
+
+// ls -lf
+void output_lf(const char *dir) {
+    printf("Listing in long format and saving to file: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    print_dynamic_to_file(head);
+}
+
+
 // wrong input
 void output_invalid_option() {
     printf("Invalid option provided. Use '--help' for usage instructions.\n");
@@ -201,6 +323,54 @@ int main(int argc, char *argv[]) {
         else if (action & ACTION_DIRECTORY_ONLY) {
             output_d(dir); // Falls -d gesetzt
         }
+
+        //JUST FOR TEST / NOT TESTED
+        else if (action & ACTION_LONG_LIST && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_lhof(dir); // Falls -l, -h, -o und -f gesetzt
+        }
+        else if (action & ACTION_LONG_LIST && action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_OUTPUT_FILE) {
+            output_ldhf(dir); // Falls -l, -d, -h und -f gesetzt
+        }
+        else if (action & ACTION_LONG_LIST && action & ACTION_DIRECTORY_ONLY && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_ldof(dir); // Falls -l, -d, -o und -f gesetzt
+        }
+        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_dhof(dir); // Falls -d, -h, -o und -f gesetzt
+        }
+        else if (action & ACTION_LONG_LIST && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION) {
+            output_lho(dir); // Falls -l, -h und -o gesetzt
+        }
+        else if (action & ACTION_LONG_LIST && action & ACTION_DIRECTORY_ONLY && action & ACTION_OUTPUT_FILE) {
+            output_ldf(dir); // Falls -l, -d und -f gesetzt
+        }
+        else if (action & ACTION_LONG_LIST && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_lof(dir); // Falls -l, -o und -f gesetzt
+        }
+        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_OUTPUT_FILE) {
+            output_dhf(dir); // Falls -d, -h und -f gesetzt
+        }
+        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_dof(dir); // Falls -d, -o und -f gesetzt
+        }
+        else if (action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_hof(dir); // Falls -h, -o und -f gesetzt
+        }
+        else if (action & ACTION_HUMAN_READABLE && action & ACTION_OUTPUT_FILE) {
+            output_hf(dir); // Falls -h und -f gesetzt
+        }
+        else if (action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_of(dir); // Falls -o und -f gesetzt
+        }
+        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_OUTPUT_FILE) {
+            output_df(dir); // Falls -d und -f gesetzt
+        }
+        else if (action & ACTION_LONG_LIST && action & ACTION_OUTPUT_FILE) {
+            output_lf(dir); // Falls -l und -f gesetzt
+        }
+        //JUST FOR TEST / NOT TESTED
+
+
+
         else if (action & ACTION_OUTPUT_FILE) {
             output_f(dir); // Falls -f gesetzt
         }

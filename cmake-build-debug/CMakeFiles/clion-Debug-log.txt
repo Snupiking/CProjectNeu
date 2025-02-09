@@ -1,4 +1,10 @@
-/snap/clion/310/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/bin/gcc -G "Unix Makefiles" -S /home/david/CLionProjects/CProjectNeu1 -B /home/david/CLionProjects/CProjectNeu1/cmake-build-debug
--- Configuring done (0.0s)
+/snap/clion/314/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -S /home/art/CLionProjects/CProjectNeu -B /home/art/CLionProjects/CProjectNeu/cmake-build-debug
+-- The C compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done (0.2s)
 -- Generating done (0.0s)
--- Build files have been written to: /home/david/CLionProjects/CProjectNeu1/cmake-build-debug
+-- Build files have been written to: /home/art/CLionProjects/CProjectNeu/cmake-build-debug
