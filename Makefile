@@ -1,5 +1,5 @@
 CC = gcc
-CFlags = -std=c11
+CFlags = -std=c11 -D_XOPEN_SOURCE=700
 
 .PHONY: all debug clean
 
