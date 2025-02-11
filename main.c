@@ -144,7 +144,6 @@ void output_f (const char *dir) {
 // ls
 void output_normal (const char *dir) {
     printf("Listing directory: %s\n", dir);
-    printf("PIkachu");
     insert_file_metadata(dir, 0);
     print_ls_without_hidden_files(head);
 }
@@ -323,8 +322,6 @@ int main(int argc, char *argv[]) {
         else if (action & ACTION_DIRECTORY_ONLY) {
             output_d(dir); // Falls -d gesetzt
         }
-
-        //JUST FOR TEST / NOT TESTED
         else if (action & ACTION_LONG_LIST && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
             output_lhof(dir); // Falls -l, -h, -o und -f gesetzt
         }
@@ -367,10 +364,6 @@ int main(int argc, char *argv[]) {
         else if (action & ACTION_LONG_LIST && action & ACTION_OUTPUT_FILE) {
             output_lf(dir); // Falls -l und -f gesetzt
         }
-        //JUST FOR TEST / NOT TESTED
-
-
-
         else if (action & ACTION_OUTPUT_FILE) {
             output_f(dir); // Falls -f gesetzt
         }
