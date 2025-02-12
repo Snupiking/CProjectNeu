@@ -21,12 +21,22 @@ void output_help() {
 
 // ls -ldho
 void output_ldho(const char *dir) {
-    printf("Listing in long format without group information and human-readable sizes for directory: %s\n", dir);
+    printf("Creating ls.txt file in long format without group information and human-readable sizes for directory: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_o(head);
     head = tag_h(head);
     head = tag_d(head);
     print_dynamic(head);
+}
+
+// ls -lhodf
+void output_lhodf(const char *dir) {
+    printf("Listing in long format without group information and human-readable sizes for directory: %s\n", dir);
+    insert_file_metadata(dir, 0);
+    head = tag_o(head);
+    head = tag_h(head);
+    head = tag_d(head);
+    print_dynamic_to_file(head);
 }
 
 // ls -dho
@@ -283,17 +293,53 @@ int main(int argc, char *argv[]) {
     if (action & ACTION_HELP) {
         output_help();
     } else {
-        if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_LONG_LIST) {
+        if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_LONG_LIST && action & ACTION_OUTPUT_FILE) {
+            output_lhodf(dir); // Falls -d, -h, -l, -f und -o gesetzt
+        }
+        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_LONG_LIST) {
             output_ldho(dir); // Falls -d, -h, -l und -o gesetzt
+        }
+        else if (action & ACTION_LONG_LIST && action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_OUTPUT_FILE) {
+            output_ldhf(dir); // Falls -l, -d, -h und -f gesetzt
+        }
+        else if (action & ACTION_LONG_LIST && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_lhof(dir); // Falls -l, -h, -o und -f gesetzt
+        }
+        else if (action & ACTION_LONG_LIST && action & ACTION_DIRECTORY_ONLY && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_ldof(dir); // Falls -l, -d, -o und -f gesetzt
+        }
+        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_dhof(dir); // Falls -d, -h, -o und -f gesetzt
         }
         else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION) {
             output_dho(dir); // Falls -d, -h und -o gesetzt
         }
+        else if (action & ACTION_LONG_LIST && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION) {
+            output_lho(dir); // Falls -l, -h und -o gesetzt
+        }
+        else if (action & ACTION_LONG_LIST && action & ACTION_DIRECTORY_ONLY && action & ACTION_OUTPUT_FILE) {
+            output_ldf(dir); // Falls -l, -d und -f gesetzt
+        }
         else if (action & ACTION_LONG_LIST && action & ACTION_HUMAN_READABLE && action & ACTION_DIRECTORY_ONLY) {
             output_ldh(dir); // Falls -l, -h und -d gesetzt
         }
+        else if (action & ACTION_LONG_LIST && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_lof(dir); // Falls -l, -o und -f gesetzt
+        }
+        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_dof(dir); // Falls -d, -o und -f gesetzt
+        }
+        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_OUTPUT_FILE) {
+            output_dhf(dir); // Falls -d, -h und -f gesetzt
+        }
+        else if (action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_hof(dir); // Falls -h, -o und -f gesetzt
+        }
         else if (action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_HUMAN_READABLE) {
             output_oh(dir); // Falls -o und -h gesetzt
+        }
+        else if (action & ACTION_HUMAN_READABLE && action & ACTION_OUTPUT_FILE) {
+            output_hf(dir); // Falls -h und -f gesetzt
         }
         else if (action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_DIRECTORY_ONLY) {
             output_do(dir); // Falls -o und -d gesetzt
@@ -307,8 +353,17 @@ int main(int argc, char *argv[]) {
         else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE) {
             output_dh(dir); // Falls -d und -h gesetzt
         }
+        else if (action & ACTION_LONG_LIST && action & ACTION_OUTPUT_FILE) {
+            output_lf(dir); // Falls -l und -f gesetzt
+        }
         else if (action & ACTION_LONG_LIST && action & ACTION_WITHOUT_GROUPINFORMATION) {
             output_lo(dir); // Falls -l und -o gesetzt
+        }
+        else if (action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
+            output_of(dir); // Falls -o und -f gesetzt
+        }
+        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_OUTPUT_FILE) {
+            output_df(dir); // Falls -d und -f gesetzt
         }
         else if (action & ACTION_WITHOUT_GROUPINFORMATION) {
             output_o(dir); // Falls -o gesetzt
@@ -322,48 +377,6 @@ int main(int argc, char *argv[]) {
         else if (action & ACTION_DIRECTORY_ONLY) {
             output_d(dir); // Falls -d gesetzt
         }
-        else if (action & ACTION_LONG_LIST && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
-            output_lhof(dir); // Falls -l, -h, -o und -f gesetzt
-        }
-        else if (action & ACTION_LONG_LIST && action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_OUTPUT_FILE) {
-            output_ldhf(dir); // Falls -l, -d, -h und -f gesetzt
-        }
-        else if (action & ACTION_LONG_LIST && action & ACTION_DIRECTORY_ONLY && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
-            output_ldof(dir); // Falls -l, -d, -o und -f gesetzt
-        }
-        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
-            output_dhof(dir); // Falls -d, -h, -o und -f gesetzt
-        }
-        else if (action & ACTION_LONG_LIST && action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION) {
-            output_lho(dir); // Falls -l, -h und -o gesetzt
-        }
-        else if (action & ACTION_LONG_LIST && action & ACTION_DIRECTORY_ONLY && action & ACTION_OUTPUT_FILE) {
-            output_ldf(dir); // Falls -l, -d und -f gesetzt
-        }
-        else if (action & ACTION_LONG_LIST && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
-            output_lof(dir); // Falls -l, -o und -f gesetzt
-        }
-        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_HUMAN_READABLE && action & ACTION_OUTPUT_FILE) {
-            output_dhf(dir); // Falls -d, -h und -f gesetzt
-        }
-        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
-            output_dof(dir); // Falls -d, -o und -f gesetzt
-        }
-        else if (action & ACTION_HUMAN_READABLE && action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
-            output_hof(dir); // Falls -h, -o und -f gesetzt
-        }
-        else if (action & ACTION_HUMAN_READABLE && action & ACTION_OUTPUT_FILE) {
-            output_hf(dir); // Falls -h und -f gesetzt
-        }
-        else if (action & ACTION_WITHOUT_GROUPINFORMATION && action & ACTION_OUTPUT_FILE) {
-            output_of(dir); // Falls -o und -f gesetzt
-        }
-        else if (action & ACTION_DIRECTORY_ONLY && action & ACTION_OUTPUT_FILE) {
-            output_df(dir); // Falls -d und -f gesetzt
-        }
-        else if (action & ACTION_LONG_LIST && action & ACTION_OUTPUT_FILE) {
-            output_lf(dir); // Falls -l und -f gesetzt
-        }
         else if (action & ACTION_OUTPUT_FILE) {
             output_f(dir); // Falls -f gesetzt
         }
@@ -371,7 +384,6 @@ int main(int argc, char *argv[]) {
             output_normal(dir);// Standard Ausgabe
         }
     }
-
 
     return 0;
 }
