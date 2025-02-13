@@ -124,15 +124,15 @@ Element *tag_without_hidden_files(Element *head) {
     Element *prev = NULL;
 
     while (current != NULL) {
-        if (current->name[0] == '.') {
+        if (current->name[0] == '.') { // Kein hidden file
             Element *to_delete = current;
-            if (prev == NULL) {
+            if (prev == NULL) { // Kopf der Liste
                 head = current->next;
             } else {
                 prev->next = current->next;
             }
             current = current->next;
-            free(to_delete);
+            free(to_delete); // Speicher freigeben
         } else {
             prev = current;
             current = current->next;
@@ -141,4 +141,3 @@ Element *tag_without_hidden_files(Element *head) {
 
     return head;
 }
-

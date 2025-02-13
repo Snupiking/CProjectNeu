@@ -26,6 +26,7 @@ void output_ldho(const char *dir) {
     head = tag_o(head);
     head = tag_h(head);
     head = tag_d(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 }
 
@@ -36,6 +37,7 @@ void output_lhodf(const char *dir) {
     head = tag_o(head);
     head = tag_h(head);
     head = tag_d(head);
+    head = tag_without_hidden_files(head);
     print_dynamic_to_file(head);
 }
 
@@ -46,6 +48,7 @@ void output_dho(const char *dir) {
     head = tag_o(head);
     head = tag_h(head);
     head = tag_d(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 }
 
@@ -56,6 +59,7 @@ void output_ldh(const char *dir) {
     insert_file_metadata(dir, 0);
     head = tag_h(head);
     head = tag_d(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 
 }
@@ -67,6 +71,7 @@ void output_oh(const char *dir) {
     insert_file_metadata(dir, 0);
     head = tag_o(head);
     head = tag_h(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 
 }
@@ -76,6 +81,7 @@ void output_lh(const char *dir) {
     printf("Listing in long format with human-readable sizes for directory: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_h(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 }
 
@@ -84,6 +90,7 @@ void output_dh(const char *dir) {
     printf("Listing in long format with human-readable sizes for directory: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_h(head);
+    head = tag_without_hidden_files(head);
     print_normal(head);
 }
 
@@ -92,6 +99,7 @@ void output_ld(const char *dir) {
     printf("Listing in long format without group information for directory: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_d(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 }
 
@@ -101,6 +109,7 @@ void output_do(const char *dir) {
     insert_file_metadata(dir, 0);
     head = tag_d(head);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 }
 
@@ -109,6 +118,7 @@ void output_lo(const char *dir) {
     printf("Listing in long format without group information for directory: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 }
 
@@ -116,7 +126,7 @@ void output_lo(const char *dir) {
 void output_l(const char *dir) {
     printf("Listing in long format for directory: %s\n", dir);
     insert_file_metadata(dir, 0);
-    tag_without_hidden_files(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 }
 
@@ -126,6 +136,7 @@ void output_d(const char *dir) {
     printf("Listing directory only: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_d(head);
+    head = tag_without_hidden_files(head);
     print_normal(head);
 }
 
@@ -133,6 +144,7 @@ void output_d(const char *dir) {
 void output_h (const char *dir) {
     printf("Listing with human-readable sizes for directory: %s\n", dir);
     insert_file_metadata(dir, 0);
+    head = tag_without_hidden_files(head);
     print_normal(head);
 }
 
@@ -142,6 +154,7 @@ void output_o (const char *dir) {
     printf("Listing in long format without group information: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 }
 
@@ -149,6 +162,7 @@ void output_o (const char *dir) {
 void output_f (const char *dir) {
     printf("Listing directory and create .txt file: %s\n", dir);
     insert_file_metadata(dir, 0);
+    head = tag_without_hidden_files(head);
     print_normal_to_file(head);
 }
 
@@ -156,6 +170,7 @@ void output_f (const char *dir) {
 void output_normal (const char *dir) {
     printf("Listing directory: %s\n", dir);
     insert_file_metadata(dir, 0);
+    head = tag_without_hidden_files(head);
     print_ls_without_hidden_files(head);
 }
 
@@ -166,6 +181,7 @@ void output_lhof(const char *dir) {
     insert_file_metadata(dir, 0);
     head = tag_h(head);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_dynamic_to_file(head);
 }
 
@@ -175,6 +191,7 @@ void output_ldhf(const char *dir) {
     insert_file_metadata(dir, 0);
     head = tag_h(head);
     head = tag_d(head);
+    head = tag_without_hidden_files(head);
     print_dynamic_to_file(head);
 }
 
@@ -184,6 +201,7 @@ void output_ldof(const char *dir) {
     insert_file_metadata(dir, 0);
     head = tag_d(head);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_dynamic_to_file(head);
 }
 
@@ -194,6 +212,7 @@ void output_dhof(const char *dir) {
     head = tag_d(head);
     head = tag_h(head);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_normal_to_file(head);
 }
 
@@ -203,6 +222,7 @@ void output_lho(const char *dir) {
     insert_file_metadata(dir, 0);
     head = tag_h(head);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_dynamic(head);
 }
 
@@ -211,6 +231,7 @@ void output_ldf(const char *dir) {
     printf("Listing in long format, directory only and saving to file: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_d(head);
+    head = tag_without_hidden_files(head);
     print_dynamic_to_file(head);
 }
 
@@ -219,6 +240,7 @@ void output_lof(const char *dir) {
     printf("Listing in long format, without group information and saving to file: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_dynamic_to_file(head);
 }
 
@@ -228,6 +250,7 @@ void output_dhf(const char *dir) {
     insert_file_metadata(dir, 0);
     head = tag_d(head);
     head = tag_h(head);
+    head = tag_without_hidden_files(head);
     print_normal_to_file(head);
 }
 
@@ -237,6 +260,7 @@ void output_dof(const char *dir) {
     insert_file_metadata(dir, 0);
     head = tag_d(head);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_normal_to_file(head);
 }
 
@@ -246,6 +270,7 @@ void output_hof(const char *dir) {
     insert_file_metadata(dir, 0);
     head = tag_h(head);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_normal_to_file(head);
 }
 
@@ -254,6 +279,7 @@ void output_hf(const char *dir) {
     printf("Listing human-readable and saving to file: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_h(head);
+    head = tag_without_hidden_files(head);
     print_normal_to_file(head);
 }
 
@@ -262,6 +288,7 @@ void output_of(const char *dir) {
     printf("Listing without group information and saving to file: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_o(head);
+    head = tag_without_hidden_files(head);
     print_normal_to_file(head);
 }
 
@@ -270,6 +297,7 @@ void output_df(const char *dir) {
     printf("Listing directory only and saving to file: %s\n", dir);
     insert_file_metadata(dir, 0);
     head = tag_d(head);
+    head = tag_without_hidden_files(head);
     print_normal_to_file(head);
 }
 
@@ -277,6 +305,7 @@ void output_df(const char *dir) {
 void output_lf(const char *dir) {
     printf("Listing in long format and saving to file: %s\n", dir);
     insert_file_metadata(dir, 0);
+    head = tag_without_hidden_files(head);
     print_dynamic_to_file(head);
 }
 
