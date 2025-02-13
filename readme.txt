@@ -1,3 +1,5 @@
+Self implemented ls command
+
 -use the make command to build the executable
 -use ./main to run the executable
 -the follwing tags are implemented:
