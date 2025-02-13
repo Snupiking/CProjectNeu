@@ -1,4 +1,4 @@
-Self implemented ls command
+Self implemented ls
 
 -use the make command to build the executable
 -use ./main to run the executable
@@ -12,5 +12,10 @@ Self implemented ls command
     --help   display this help and exit
 
     examples for using tags: ./main -l, ./main -lh, ./main -l -h
+
+    if no directory is given the home directory is used
+
+    examples for using own directory: ./main /home/user, ./main -lh /home/user
+
 
 -use the make clean command to remove the executable
