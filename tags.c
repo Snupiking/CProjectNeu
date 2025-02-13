@@ -119,4 +119,26 @@ void ls_r(const char *current_path) {
     }
 }
 
+Element *tag_without_hidden_files(Element *head) {
+    Element *current = head;
+    Element *prev = NULL;
+
+    while (current != NULL) {
+        if (current->name[0] == '.') {
+            Element *to_delete = current;
+            if (prev == NULL) {
+                head = current->next;
+            } else {
+                prev->next = current->next;
+            }
+            current = current->next;
+            free(to_delete);
+        } else {
+            prev = current;
+            current = current->next;
+        }
+    }
+
+    return head;
+}
 

@@ -116,6 +116,7 @@ void output_lo(const char *dir) {
 void output_l(const char *dir) {
     printf("Listing in long format for directory: %s\n", dir);
     insert_file_metadata(dir, 0);
+    tag_without_hidden_files(head);
     print_dynamic(head);
 }
 
