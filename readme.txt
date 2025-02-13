@@ -4,7 +4,7 @@ Self implemented ls
 -use ./main to run the executable
 -the follwing tags are implemented:
 
-    -l    use a long listing format\n")
+    -l    use a long listing format
     -h    with -l, print sizes like 1K 234M 2G etc.
     -o    like -l, but do not list group information
     -d    list directories themselves, not their contents
